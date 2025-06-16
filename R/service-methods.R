@@ -198,10 +198,13 @@ depositsClient$set ("private", "fill_service_id_url", function () {
     } else if (self$service == "zenodo") {
         self$id <- self$hostdata$id
         links <- self$hostdata$links
-        self$url_service <- ifelse (
-            "latest_html" %in% names (links),
-            links$latest_html, links$html
-        )
+
+        if("latest_html" %in% names (links)){
+            # drop trailing latest
+           self$url_service <- gsub("/latest$","",links$latest_html)
+        } else {
+           self$url_service <- links$html
+        }
 
         # If id is a new version, update url_service to edit-mode interface for
         # new version:
