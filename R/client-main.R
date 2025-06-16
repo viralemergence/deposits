@@ -783,12 +783,11 @@ depositsClient <- R6::R6Class ( # nolint (not snake_case)
             hostdata <- httr2::resp_body_json (resp, simplifyVector = TRUE)
             hostdata <- httptest2_hostdata_timestamps (hostdata, self$service)
 
-            
-
-            self$hostdata <- hostdata
-            
             # correct urls for published zenodo deposits. If URLS are correct, no change will be made.  
-            self$hostdata <- correct_download_urls(self)
+            if(self$service == "zenodo"){
+                hostdata <- correct_download_urls(hostdata)
+            }
+            self$hostdata <- hostdata
 
             has_frictionless <- host_has_frictionless (
                 self$service,
