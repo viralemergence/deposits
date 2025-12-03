@@ -35,7 +35,7 @@ depositsClient$set ("private", "deposits_list_extract", function () {
     browser()
     url <- service_deposits_urls (self$service, self$url_base)
 
-    req <- create_httr2_helper (url, self$headers$Authorization, "POST")
+    req <- create_httr2_helper (url, self$headers$Authorization, "GET")
     resp <- httr2::req_perform (req)
     httr2::resp_check_status (resp)
 
